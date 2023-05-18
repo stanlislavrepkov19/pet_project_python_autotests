@@ -1,7 +1,6 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
 
 
 def pytest_addoption(parser):
@@ -16,7 +15,7 @@ def browser(request):
     options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
     browser = webdriver.Chrome(options=options)
     print("\nstart chrome browser for test..")
-    browser.implicitly_wait(10)
+    #browser.implicitly_wait(10) - disabled for recent tests
     yield browser
     print("\nquit browser..")
     browser.quit()
