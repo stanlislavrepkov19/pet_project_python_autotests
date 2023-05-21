@@ -9,13 +9,14 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope="function")
-def browser(request):
-    user_language = request.config.getoption("language")
-    options = Options()
-    options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-    browser = webdriver.Chrome(options=options)
-    print("\nstart chrome browser for test..")
-    #browser.implicitly_wait(10) - disabled for recent tests
+def browser():
+    #Опции
+    chrome_options = Options()
+    #Не показывать запуск браузера каждый тест
+    chrome_options.add_argument("--headless")
+    print("\nstart browser for test..")
+    chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    browser = webdriver.Chrome(options=chrome_options)
     yield browser
     print("\nquit browser..")
     browser.quit()
